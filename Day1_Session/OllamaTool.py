@@ -59,7 +59,7 @@ messages = [
 
 # First chat: Model decides if/when to call tools
 response = ollama.chat(
-    model='llama3.1',
+    model='llama3.2:1b',
     messages=messages,
     tools=[weather_tool],
     options={"temperature":0.1}
@@ -86,7 +86,7 @@ if 'tool_calls' in response['message']:
     
     # Second chat: Send updated messages for the model to generate final answer
     final_response = ollama.chat(
-        model='llama3.1',
+        model='llama3.2:1b',
         messages=messages,
     )
     print(final_response)

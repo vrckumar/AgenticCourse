@@ -17,5 +17,5 @@ messages = [
 ]
 
 # Call Ollama
-response = ollama.chat(model="llama3.2", messages=messages)
+response = ollama.chat(model="llama3.2:1b", messages=messages)
 print(response['message']['content'])

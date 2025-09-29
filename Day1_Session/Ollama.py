@@ -11,7 +11,7 @@ messages = [
 
 # Call the Ollama LLM with the custom system prompt
 response = ollama.chat(
-    model="llama3.2",
+    model="llama3.2:1b",
     messages=messages
 )
 
