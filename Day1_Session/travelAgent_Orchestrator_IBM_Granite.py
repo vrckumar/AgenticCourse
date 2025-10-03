@@ -1,10 +1,10 @@
 import asyncio
-from agents import Agent, Runner, OpenAIChatCompletionsModel, ModelSettings
+from agents import Agent, AgentBase, RunContextWrapper, Runner, OpenAIChatCompletionsModel, ModelSettings
 from openai import AsyncOpenAI
 
 model_settings = ModelSettings(temperature=0.4)
 local_model = OpenAIChatCompletionsModel(
-    model="granite3-moe:1b",
+    model="llama3.2:1b",
     openai_client=AsyncOpenAI(base_url="http://localhost:11434/v1", api_key="NONE")
 )
 
@@ -16,21 +16,21 @@ flight_agent = Agent(
     name="flightAgent",
     instructions=flight_instructions,
     model=local_model,
-    model_settings=model_settings
+    model_settings=model_settings,
 )
 
 hotel_agent = Agent(
     name="hotelAgent",
     instructions=hotel_instructions,
     model=local_model,
-    model_settings=model_settings
+    model_settings=model_settings,
 )
 
-description_flight = "Retrieve flight details for the user's trip query."
-description_hotel = "Retrieve hotel details for the user's trip query."
+description_flight = "This tool can be used to retrieve flight details for the user's trip query."
+description_hotel = "This tool can be used to retrieve hotel details for the user's trip query."
 
-flight_tool = flight_agent.as_tool(tool_name="get_flight_details", tool_description=description_flight)
-hotel_tool = hotel_agent.as_tool(tool_name="get_hotel_details", tool_description=description_hotel)
+flight_tool = flight_agent.as_tool(tool_name="get_flight_details", tool_description=description_flight,is_enabled=True,)
+hotel_tool = hotel_agent.as_tool(tool_name="get_hotel_details", tool_description=description_hotel,is_enabled=True,)
 
 tools = [flight_tool, hotel_tool]
 
